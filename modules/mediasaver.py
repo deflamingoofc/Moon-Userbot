@@ -7,7 +7,6 @@ from utils.misc import modules_help, prefix
 
 
 @Client.on_message(filters.me)
-@with_reply
 async def msave(client: Client, message: Message):
     media = message.reply_to_message.media
 
