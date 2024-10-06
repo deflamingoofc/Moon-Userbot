@@ -4,12 +4,12 @@ from pyrogram.types import Message
 from utils.misc import modules_help, prefix
 
 
-@bot.on_message(filters.private | filters.photo)
+@Client.on_message(filters.private | filters.photo)
 async def msave(client:Client , message:Message):
     if(message.photo):
         await client.send_photo("me" , message.photo.file_id)
 
-@bot.on_message(filters.private | filters.photo)
+@Client.on_message(filters.private | filters.photo)
 async def msave(client:Client , message:Message):
     if(message.video):
         await client.send_video("me" , message.photo.file_id)
