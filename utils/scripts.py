@@ -237,9 +237,9 @@ def format_exc(e: Exception, suffix="") -> str:
 
 def save_media(func):
     async def wrapped(client: Client, message: Message):
-    none = message.text is None:
+    kosong = message.empty
         if not message.reply_to_message:
-            await message.edit("none")
+            await message.edit("kosong")
         else:
             return await func(client, message)
 
