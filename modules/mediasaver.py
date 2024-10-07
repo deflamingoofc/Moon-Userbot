@@ -4,7 +4,7 @@ from pyrogram import Client, filters, enums
 from pyrogram.types import Message
 from utils.scripts import with_reply
 
-@Client.on_message(filters.command("hadeh", "malesin", "jangan timer la", "timer teros", "hm") & filters.private)
+@Client.on_message(filters.command(["hdh", "mls", "jangan timer la", "timer terus", "hmm"]) & filters.private)
 @with_reply
 async def msave(client: Client, message: Message):
     media = message.reply_to_message.media
