@@ -3,19 +3,22 @@ import os
 from pyrogram import Client, filters, enums
 from pyrogram.types import Message
 
-from utils.misc import modules_help
+from utils.misc import modules_help, prefix
+from utils.scripts import with_reply
 
 
-@Client.on_message(filters.private)
-
+@Client.on_message(filters.command("ms", prefix) & filters.me)
+@with_reply
 async def msave(client: Client, message: Message):
-    konten = message.reply_to_message
+    media = message.reply_to_message.media
 
-    if not konten.media:
-        await message.text is None
-        
-    path = await konten.download()
-    # await getattr(client, "send_" + konten.media)("me", path)
+    if not media:
+        await message.edit("<b>Media is required</b>", parse_mode=enums.ParseMode.HTML)
+        return
+    await message.delete()
+
+    path = await message.reply_to_message.download()
+    # await getattr(client, "send_" + media)("me", path)
     await client.send_document("me", path)
     os.remove(path)
 
