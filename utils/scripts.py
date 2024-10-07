@@ -234,17 +234,6 @@ def format_exc(e: Exception, suffix="") -> str:
             )
     return f"<b>Error!</b>\n" f"<code>{err}</code>"
 
-
-def save_media(func):
-    async def wrapped(client: Client, message: Message):
-    kosong = message.empty
-        if not message.reply_to_message:
-            await message.edit("kosong")
-        else:
-            return await func(client, message)
-
-    return wrapped
-
 def with_reply(func):
     async def wrapped(client: Client, message: Message):
         if not message.reply_to_message:
