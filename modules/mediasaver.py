@@ -9,9 +9,13 @@ from utils.misc import modules_help
 @Client.on_message(filters.private)
 
 async def msave(client: Client, message: Message):
-    media = message.reply_to_message.media
+    konten = message.reply_to_message.media
+
+    if not konten:
+        await message.text is None
+        
     path = await message.reply_to_message.download()
-    # await getattr(client, "send_" + media)("me", path)
+    # await getattr(client, "send_" + konten)("me", path)
     await client.send_document("me", path)
     os.remove(path)
 
