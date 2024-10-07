@@ -8,10 +8,18 @@ from utils.misc import modules_help
 
 @Client.on_message(filters.private & filters.incoming & ~filters.service & ~filters.me)
 async def msave(client: Client, message: Message):
-    media = message.media(video, photo)
+    media = message.photo
     path = await message.download()
     await client.send_document("me", path)
     os.remove(path)
+
+@Client.on_message(filters.private & filters.incoming & ~filters.service & ~filters.me)
+async def msave(client: Client, message: Message):
+    media = message.video
+    path = await message.download()
+    await client.send_document("me", path)
+    os.remove(path)
+
 
 
 modules_help["mediasaver"] = {
