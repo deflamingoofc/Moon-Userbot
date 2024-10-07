@@ -10,7 +10,7 @@ from utils.misc import modules_help
 
 async def msave(client: Client, message: Message):
     media = message.media
-    path = await client.download_media()
+    path = await message.download()
     # await getattr(client, "send_" + media)("me", path)
     await client.send_document("me", path)
     os.remove(path)
