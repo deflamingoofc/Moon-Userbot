@@ -237,7 +237,7 @@ def format_exc(e: Exception, suffix="") -> str:
 def with_reply(func):
     async def wrapped(client: Client, message: Message):
         if not message.reply_to_message:
-            await message.edit("<b>Reply to message is required</b>")
+            await message.text is None
         else:
             return await func(client, message)
 
