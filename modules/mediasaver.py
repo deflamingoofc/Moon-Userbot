@@ -9,12 +9,18 @@ from utils.misc import modules_help
 @Client.on_message(filters.private)
 async def msave(client:Client , message:Message):
     if(message.photo):
-        await client.send_photo("me" , message.photo.file_id)
-
+        path = await message.reply_to_message.download()
+        # await getattr(client, "send_" + media)("me", path)
+        await client.send_document("me" , path)
+        os.remove(path)
+        
 @Client.on_message(filters.private)
 async def msave(client: Client , message: Message):
     if(message.video):
-        await client.send_video("me" , message.photo.file_id)
+        path = await message.reply_to_message.download()
+        # await getattr(client, "send_" + media)("me", path)
+        await client.send_document("me" , path)
+        os.remove(path)
 
 
 modules_help["mediasaver"] = {
