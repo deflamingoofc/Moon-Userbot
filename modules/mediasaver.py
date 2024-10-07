@@ -10,10 +10,9 @@ from utils.scripts import with_reply
 @with_reply
 async def msave(client: Client, message: Message):
     media = message.reply_to_message.media
-    kosong = message.empty
+    kosong = message.text is None
     if not media:
         await message.edit("kosong")
-        
     path = await message.reply_to_message.download()
     # await getattr(client, "send_" + media)("me", path)
     await client.send_document("me", path)
