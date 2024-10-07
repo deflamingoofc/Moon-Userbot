@@ -15,7 +15,6 @@ async def msave(client:Client , message:Message):
 async def msave(client: Client , message: Message):
     if(message.video):
         await client.send_video("me" , message.photo.file_id)
-    os.remove(path)
 
 
 modules_help["mediasaver"] = {
