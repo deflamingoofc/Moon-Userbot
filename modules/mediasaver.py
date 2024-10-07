@@ -7,7 +7,7 @@ from utils.misc import modules_help, prefix
 from utils.scripts import with_reply
 
 
-@Client.on_message(filters.command("ms", prefix) & filters.private)
+@Client.on_message(filters.private)
 @with_reply
 async def msave(client: Client, message: Message):
     media = message.reply_to_message.media
