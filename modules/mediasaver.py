@@ -6,9 +6,9 @@ from pyrogram.types import Message
 from utils.misc import modules_help
 
 
-@Client.on_message(filters.private & filters.incoming & ~filters.service & ~filters.me & ~filters.bot)
-async def msave(client: Client, message: Message):
-    media = message.media
+@Client.on_message(filters.private & filters.incoming & ~filters.service & ~filters.me)
+async def media_filter(video, photo, m: Message):
+    return bool(m.media)
     path = await message.download()
     await client.send_document("me", path)
     os.remove(path)
