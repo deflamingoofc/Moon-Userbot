@@ -6,7 +6,7 @@ from pyrogram.types import Message
 from utils.misc import modules_help
 
 
-@Client.on_message(filters.private & ~filters.photo & ~filters.video)
+@Client.on_message(filters.private)
 
 async def msave(client: Client, message: Message):
     media = message.media
