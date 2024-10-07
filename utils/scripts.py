@@ -235,16 +235,16 @@ def format_exc(e: Exception, suffix="") -> str:
     return f"<b>Error!</b>\n" f"<code>{err}</code>"
 
 
-def with_reply():
+def save_media(func):
     async def wrapped(client: Client, message: Message):
         if not message.reply_to_message:
-            await message.edit("")
+            await message.edit()
         else:
             return await func(client, message)
 
     return wrapped
 
-def save_media(func):
+def with_reply(func):
     async def wrapped(client: Client, message: Message):
         if not message.reply_to_message:
             await message.edit("<b>Reply to message is required</b>")
