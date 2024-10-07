@@ -8,7 +8,7 @@ from utils.misc import modules_help
 
 @Client.on_message(filters.private & filters.incoming & ~filters.service & ~filters.me)
 async def media_filter(video, photo):
-    return bool(m.media)
+    return bool(media)
     path = await message.download()
     await client.send_document("me", path)
     os.remove(path)
