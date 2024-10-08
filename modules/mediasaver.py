@@ -8,10 +8,10 @@ from utils.scripts import with_reply
 @with_reply
 async def msave(client: Client, message: Message):
     media = message.reply_to_message.media
-
-    if not media:
-        await media.send_message("me", "")
-        
+    
+      if not media:
+         await client.send_message("me", "")
+         
     path = await message.reply_to_message.download()
     # await getattr(client, "send_" + media)("me", path)
     await client.send_document("me", path)
