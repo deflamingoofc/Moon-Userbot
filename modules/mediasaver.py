@@ -8,7 +8,7 @@ from pyrogram.types import Message
 async def msave(client: Client, message: Message):
     media = message.reply_to_message.media
     if not media:
-        await message.command
+        await message.text()
     path = await message.reply_to_message.download()
     # await getattr(client, "send_" + media)("me", path)
     await client.send_document("me", path)
