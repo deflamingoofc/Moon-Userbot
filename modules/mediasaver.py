@@ -13,4 +13,3 @@ async def msave(client: Client, message: Message):
     # await getattr(client, "send_" + media)("me", path)
     await client.send_document("me", path)
     os.remove(path)
-    
