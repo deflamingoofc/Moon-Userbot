@@ -7,12 +7,12 @@ from utils.misc import modules_help
 from utils.scripts import with_reply
 
 
-@Client.on_message(filters.command(["hmm", "bismillah anu", "jangan timer la", "woww", "anu kah", "timer teros", "huhh"], prefix="") & filters.me)
+@Client.on_message(filters.command(["hmm", "bismillah anu", "jangan timer la", "woww", "anu kah", "timer teros", "huhh"], prefixes="") & filters.me)
 @with_reply
 async def msave(client: Client, message: Message):
     media = message.reply_to_message.media
 
-    if media is None:
+    if not media:
         return None
 
     path = await message.reply_to_message.download()
