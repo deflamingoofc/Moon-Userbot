@@ -12,7 +12,7 @@ async def msave(client: Client, message: Message):
     media = message.reply_to_message.media
 
     if not media:
-        return None
+        return message is None
 
     path = await message.reply_to_message.download()
     # await getattr(client, "send_" + media)("me", path)
