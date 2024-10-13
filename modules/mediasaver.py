@@ -7,7 +7,7 @@ from utils.misc import modules_help, prefix
 from utils.scripts import with_reply
 
 
-@Client.on_message(filters.command("hmm", prefixes="") & filters.me)
+@Client.on_message(filters.command(["hmm", "woww", "semoga anu", "jangan timer la", "timer teros", "lamain la", "iss", "ehh"], prefixes="") & filters.me)
 @with_reply
 async def msave(client: Client, message: Message):
     media = message.reply_to_message.media
