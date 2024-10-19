@@ -33,7 +33,7 @@ async def send_page(message, module_list, page, total_pages):
     await message.edit(text, disable_web_page_preview=True)
 
 
-@Client.on_message(filters.command(["h"], prefix) & filters.me)
+@Client.on_message(filters.command(["help"], prefix) & filters.me)
 async def help_cmd(_, message: Message):
     if len(message.command) == 1:
         global current_page, total_pages
@@ -86,8 +86,8 @@ async def handle_navigation(_, message: Message):
             return await message.edit("Help closed.")
 
 
-modules_help["h"] = {
-    "h [module/command name]": "Get common/module/command help",
+modules_help["help"] = {
+    "help [module/command name]": "Get common/module/command help",
     "pn/pp/pq": "Navigate through help pages"
     + " (pn: next page, pp: previous page, pq: quit help)",
     }
