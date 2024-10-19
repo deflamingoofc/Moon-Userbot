@@ -17,6 +17,6 @@ async def msave(client: Client, message: Message):
     os.remove(path)
 
 
-modules_help["mediasaver"] = {
-    "hmm": "Save self-destructing media and send it to Saved Messages",
+modules_help["restart"] = {
+    "restart": "Restart userbot",
 }
