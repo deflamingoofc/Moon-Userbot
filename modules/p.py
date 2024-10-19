@@ -38,17 +38,17 @@ def get_readable_time(seconds: int) -> str:
     return ping_time
 
 
-@Client.on_message(filters.command("hidup", prefix) & filters.me)
+@Client.on_message(filters.command("p", prefix) & filters.me)
 async def alive(client, message):
     start_time = time.time()
     uptime = get_readable_time((time.time() - StartTime))
-    reply_msg = f"!<a href = https://t.me/Nekogram_app>Nekogram</a>\n"
+    reply_msg = f"<a href = https://t.me/Nekogram_app>Nekogram</a>\n"
     end_time = time.time()
     reply_msg += f"\nMenyala: <code>{uptime}</code>"
     await message.delete()
     await client.send_message(message.chat.id, reply_msg, disable_web_page_preview=True, parse_mode=enums.ParseMode.HTML)
 
 
-modules_help["hidup"] = {
-    "hidup": " check bot alive status",
+modules_help["p"] = {
+    "p": " cek seberapa lama bot menyala",
 }
