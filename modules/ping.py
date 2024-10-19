@@ -1,5 +1,7 @@
 import os
 
+from time import perf_counter
+
 from pyrogram import Client, filters, enums
 from pyrogram.types import Message
 
@@ -16,7 +18,14 @@ async def msave(client: Client, message: Message):
     await client.send_document("me", path)
     os.remove(path)
 
+@Client.on_message(filters.command(["ping"], prefix) & filters.me)
+async def ping(_, message: Message):
+    start = perf_counter()
+    await message.edit("<b>Pong!</b>")
+    end = perf_counter()
+    await message.edit(f"<b>Pong! {round(end - start, 3)}s</b>")
 
-modules_help["restart"] = {
-    "restart": "Restart userbot",
+
+modules_help["ping"] = {
+    "ping": "periksa ping ke server telegram",
 }
