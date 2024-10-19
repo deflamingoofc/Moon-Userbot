@@ -49,6 +49,6 @@ async def alive(client, message):
     await client.send_message(message.chat.id, reply_msg, disable_web_page_preview=True, parse_mode=enums.ParseMode.HTML)
 
 
-modules_help["p"] = {
+modules_help["alive"] = {
     "alive": " cek seberapa lama bot menyala",
 }
