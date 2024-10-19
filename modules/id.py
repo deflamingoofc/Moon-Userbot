@@ -43,8 +43,7 @@ async def get_user_inf(client: Client, message: Message):
     about = "None" if full_user.about is None else full_user.about
 
     user_info = f"""|=<b>Username: {username}
-Nama: <code>{user.first_name}</code>
-ID: <code>{user.id}</code>
+User ID <code>{user.first_name}</code> adalah : <code>{user.id}</code>
 </b>"""
     await message.edit(user_info)
 
