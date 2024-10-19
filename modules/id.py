@@ -42,11 +42,11 @@ async def get_user_inf(client: Client, message: Message):
         username = f"@{user.username}"
     about = "None" if full_user.about is None else full_user.about
 
-    user_info = f"""User ID <b><code>{user.first_name}</code></b> adalah : <code>{user.id}</code>
+    user_info = f"""ユーザーID <b><code>{user.first_name}</code></b> は : <code>{user.id}</code>
 """
     await message.edit(user_info)
 
 
 modules_help["id"] = {
-    "id [reply|id|username]": "Get brief information about user",
+    "id [reply|id|username]": "melihat id pengguna",
 }
