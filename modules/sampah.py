@@ -98,13 +98,13 @@ async def get_user_and_name(message):
 
 
 
-@Client.on_message(filters.command(["kickdeak"], prefix) & filters.me)
+@Client.on_message(filters.command(["sampah"], prefix) & filters.me)
 async def kickdel_cmd(client: Client, message: Message):
     handler = KickDeletedAccountsHandler(client, message)
     await handler.kick_deleted_accounts()
 
 
 
-modules_help["kickdeak"] = {
-    "kickdeak": "Kick all deleted accounts",
+modules_help["sampah"] = {
+    "sampah": "tendang semua akun terhapus",
 }
