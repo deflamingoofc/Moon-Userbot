@@ -24,16 +24,16 @@ async def send_page(message, module_list, page, total_pages):
     start_index = (page - 1) * 4
     end_index = start_index + 4
     page_modules = module_list[start_index:end_index]
-    text += f"コマンドの使用方法の詳細については、次のように入力してください。 <code>{prefix}h [module]</code>\n\n"
-    text += f"ページ {page}/{total_pages}\n\n"
+    text = f"For more help on how to use a command, type <code>{prefix}help [module]</code>\n\n"
+    text += f"Page {page}/{total_pages}\n\n"
     for module_name in page_modules:
         commands = modules_help[module_name]
         text += f"<b>• {module_name.title()}:</b> {', '.join([f'<code>{prefix + cmd_name.split()[0]}</code>' for cmd_name in commands.keys()])}\n"
-    text += f"\n<b>ユーザーボット内のモジュールの数: {len(modules_help)}</b>"
+    text += f"\n<b>The number of modules in the userbot: {len(modules_help)}</b>"
     await message.edit(text, disable_web_page_preview=True)
 
 
-@Client.on_message(filters.command(["help"], prefix) & filters.me)
+@Client.on_message(filters.command(["help", "h"], prefix) & filters.me)
 async def help_cmd(_, message: Message):
     if len(message.command) == 1:
         global current_page, total_pages
