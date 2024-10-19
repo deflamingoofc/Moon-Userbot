@@ -21,8 +21,8 @@ current_page = 0
 total_pages = 0
 
 async def send_page(message, module_list, page, total_pages):
-    start_index = (page - 1) * 5
-    end_index = start_index + 5
+    start_index = (page - 1) * 4
+    end_index = start_index + 4
     page_modules = module_list[start_index:end_index]
     text = f"<b>Help for <a href=https://t.me/Moonub_chat>Moon-Userbot</a></b>\n"
     text += f"For more help on how to use a command, type <code>{prefix}help [module]</code>\n\n"
@@ -39,7 +39,7 @@ async def help_cmd(_, message: Message):
     if len(message.command) == 1:
         global current_page, total_pages
         module_list = list(modules_help.keys())
-        total_pages = (len(module_list) + 4) // 5
+        total_pages = (len(module_list) + 3) // 4
         current_page = 1
         await send_page(message, module_list, current_page, total_pages)
     elif message.command[1].lower() in modules_help:
