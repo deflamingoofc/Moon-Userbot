@@ -38,7 +38,7 @@ def get_readable_time(seconds: int) -> str:
     return ping_time
 
 
-@Client.on_message(filters.command("p", prefix) & filters.me)
+@Client.on_message(filters.command("alive", prefix) & filters.me)
 async def alive(client, message):
     start_time = time.time()
     uptime = get_readable_time((time.time() - StartTime))
@@ -50,5 +50,5 @@ async def alive(client, message):
 
 
 modules_help["p"] = {
-    "p": " cek seberapa lama bot menyala",
+    "alive": " cek seberapa lama bot menyala",
 }
