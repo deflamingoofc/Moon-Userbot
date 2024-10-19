@@ -46,6 +46,7 @@ def get_readable_time(seconds: int) -> str:
 async def alive(client, message):
     start_time = time.time()
     uptime = get_readable_time((time.time() - StartTime))
+    reply_msg = f"!<a href = https://github.com/The-MoonTg-project/Moon-Userbot>Moon-Userbot</a>\n"
     end_time = time.time()
     reply_msg += f"\nUptime: <code>{uptime}</code>"
     await message.delete()
