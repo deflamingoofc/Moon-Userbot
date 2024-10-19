@@ -4,8 +4,6 @@ from utils.misc import modules_help, requirements_list, prefix
 import asyncio
 import time
 from datetime import datetime
-from sys import version_info
-from pyrogram import __version__ as __pyro_version__
 
 StartTime = time.time()
 
@@ -13,8 +11,6 @@ StartTime = time.time()
 __major__ = 0
 __minor__ = 2
 __micro__ = 1
-
-__python_version__ = f"{version_info[0]}.{version_info[1]}.{version_info[2]}"
 
 
 def get_readable_time(seconds: int) -> str:
