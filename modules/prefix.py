@@ -23,7 +23,7 @@ from utils.scripts import restart
 
 
 @Client.on_message(
-    filters.command(["sp", "setprefix", "setprefix_Moon"], prefix) & filters.me
+    filters.command(["sp", "setprefix"], prefix) & filters.me
 )
 async def setprefix(_, message: Message):
     if len(message.command) > 1:
@@ -37,5 +37,4 @@ async def setprefix(_, message: Message):
 
 modules_help["prefix"] = {
     "setprefix [prefix]": "Set custom prefix",
-    "setprefix_Moon [prefix]": "Set custom prefix",
 }
