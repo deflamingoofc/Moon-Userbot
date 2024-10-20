@@ -10,7 +10,7 @@ from utils.scripts import edit_or_reply
 
 @Client.on_message(filters.command("cek", prefix) & filters.me)
 async def sg(client: Client, message: Message):
-    lol = await edit_or_reply(message, "<code>sedang memproses, tunggu...</code>")
+    lol = await edit_or_reply(message, "<code>Sedang memproses, tunggu...</code>")
     if message.reply_to_message and message.reply_to_message.from_user:
         user_id = message.reply_to_message.from_user.id
     else:
@@ -34,7 +34,7 @@ async def sg(client: Client, message: Message):
         hmm = opt.text
         if hmm.startswith("Forward"):
             await lol.edit(
-                "**Unknown error occurred**", parse_mode=enums.ParseMode.MARKDOWN
+                "**Terjadi kesalahan yang tidak diketahui**", parse_mode=enums.ParseMode.MARKDOWN
             )
             return
         await lol.delete()
