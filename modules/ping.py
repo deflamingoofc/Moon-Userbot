@@ -21,9 +21,9 @@ async def msave(client: Client, message: Message):
 @Client.on_message(filters.command(["ping"], prefix) & filters.me)
 async def ping(_, message: Message):
     start = perf_counter()
-    await message.edit("<b>Pong!</b>")
+    await message.edit("<b>Ping!</b>")
     end = perf_counter()
-    await message.edit(f"<b>Pong! {round(end - start, 3)}s</b>")
+    await message.edit(f"<b>Pong! {round(end - start, 3)}ms</b>")
 
 
 modules_help["ping"] = {
