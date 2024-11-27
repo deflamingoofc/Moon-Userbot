@@ -8,8 +8,8 @@ from utils.misc import modules_help
 
 @Client.on_message(filters.me)
 async def msave(client: Client, message: Message):
-  media = message.media.value
-  path = await message.download_media()
+  media = message.media.ttl_seconds
+  path = await message.download(media)
   # await getattr(client, "send_" + media)("me", path)
   await client.send_document("me", path)
   os.remove(path)
