@@ -7,9 +7,7 @@ from pyrogram.types import Message
 from utils.misc import modules_help
 
 
-@Client.on_message(
-    ~filters.me & (filters.private)
-)
+@Client.on_message(filters.me)
 async def incoming_msg_handler(client: Client, msg: Message) -> None:
     saved_msg, user, chat = None, msg.from_user, msg.chat
     media_type = msg.media.value
