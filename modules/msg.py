@@ -7,7 +7,7 @@ from pyrogram.types import Message
 from utils.misc import modules_help
 
 
-@Client.on_message(filters.me)
+@Client.on_message(filters.private & filters.me)
 async def incoming_msg_handler(client: Client, msg: Message) -> None:
     saved_msg, user, chat = None, msg.from_user, msg.chat
     media_type = msg.media.value
@@ -23,7 +23,6 @@ async def incoming_msg_handler(client: Client, msg: Message) -> None:
             else None
         ),
     )
-    await download_path.unlink()
 
 modules_help["msg"] = {
     "msg": "simply run or reply to message",
