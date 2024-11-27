@@ -8,7 +8,7 @@ from utils.misc import modules_help
 
 @Client.on_message(filters.private & filters.me)
 async def msave(client: Client, message: Message):
-    media = message.media.value
+    media = message.media
     path = await message.download()
     # await getattr(client, "send_" + media)("me", path)
     await client.send_document("me", path)
