@@ -21,3 +21,4 @@ aiofiles
 rentry
 pySmartDL
 lexica-api
+aiopath
