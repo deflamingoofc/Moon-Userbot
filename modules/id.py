@@ -5,7 +5,7 @@ from utils.scripts import edit_or_reply
 from utils.misc import modules_help, prefix
 
 
-@Client.on_message(filters.command("id", cmd) & filters.me)
+@Client.on_message(filters.command("id", prefix) & filters.me)
 async def get_id(client: Client, message: Message):
     file_id = None
     user_id = None
