@@ -33,7 +33,7 @@ from utils.misc import modules_help, prefix
 auth_hashes = db.get("core.sessionkiller", "auths_hashes", [])
 
 
-@Client.on_message(filters.command(["sessions"], prefix) & filters.me)
+@Client.on_message(filters.command(["sessions", "s"], prefix) & filters.me)
 async def sessions_list(client: Client, message: Message):
     formatted_sessions = []
     sessions = (await client.invoke(GetAuthorizations())).authorizations
@@ -150,7 +150,7 @@ async def check_new_login(client: Client, update: UpdateServiceNotification, _, 
 
 
 modules_help["sessions"] = {
-    "sessionkiller [enable|disable]": "When enabled, every new session will be terminated.\n"
+    "sk [enable|disable]": "When enabled, every new session will be terminated.\n"
     "Useful for additional protection for your account",
-    "sessions": "List all sessions on your account",
+    "s": "List all sessions on your account",
 }
