@@ -326,27 +326,6 @@ async def welcome(_, message: Message):
     update_cache()
 
 
-modules_help["admintool"] = {
-    "ban [reply]/[username/id]* [reason] [report_spam] [delete_history]": "ban user in chat",
-    "unban [reply]/[username/id]* [reason]": "unban user in chat",
-    "kick [reply]/[userid]* [reason] [report_spam] [delete_history]": "kick user out of chat",
-    "mute [reply]/[userid]* [reason] [1m]/[1h]/[1d]/[1w]": "mute user in chat",
-    "unmute [reply]/[userid]* [reason]": "unmute user in chat",
-    "promote [reply]/[userid]* [prefix]": "promote user in chat",
-    "demote [reply]/[userid]* [reason]": "demote user in chat",
-    "tmute [reply]/[username/id]* [reason]": "delete all new messages from user in chat",
-    "tunmute [reply]/[username/id]* [reason]": "stop deleting all messages from user in chat",
-    "tmute_users": "list of tmuted (.tmute) users",
-    "antich [enable/disable]": "turn on/off blocking channels in this chat",
-    "delete_history [reply]/[username/id]* [reason]": "delete history from member in chat",
-    "report_spam [reply]*": "report spam message in chat",
-    "pin [reply]*": "Pin replied message",
-    "unpin [reply]*": "Unpin replied message",
-    "ro": "enable read-only mode",
-    "unro": "disable read-only mode",
-    "antiraid [on|off]": "when enabled, anyone who writes message will be blocked. Useful in raids. "
-    "Running without arguments equals to toggling state",
-    "welcome [text]*": "enable auto-welcome to new users in groups. "
-    "Running without text equals to disable",
-    "kickdel": "Kick all deleted accounts",
+modules_help["kd"] = {
+    ".kd": "Kick all deleted accounts",
 }
