@@ -24,7 +24,7 @@ from utils.misc import modules_help, prefix
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-@Client.on_message(filters.command(["ping", "p"], prefix) & filters.me)
+@Client.on_message(filters.command(["p"], prefix) & filters.me)
 async def ping(_, message: Message):
     start = perf_counter()
     await message.edit("<b>Pong!</b>")
@@ -32,6 +32,6 @@ async def ping(_, message: Message):
     await message.edit(f"<b>Pong! {round(end - start, 3)}s</b>")
 
 
-modules_help["ping"] = {
-    "ping": "Check ping to Telegram servers",
+modules_help["p"] = {
+    "p": "Check ping to Telegram servers",
 }
