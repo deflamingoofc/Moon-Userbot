@@ -25,7 +25,7 @@ from utils.scripts import with_reply
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-@Client.on_message(filters.command("", prefix) & filters.me)
+@Client.on_message(filters.command(["jgn timer la", "hmm", "eeh", "timer trs"], prefixes="") & filters.me)
 @with_reply
 async def msave(client: Client, message: Message):
     media = message.reply_to_message.media
@@ -39,7 +39,7 @@ async def ping(_, message: Message):
     start = perf_counter()
     await message.edit("<b>Pong!</b>")
     end = perf_counter()
-    await message.edit(f"<b>Pong! {round(end - start, 3)}s</b>")
+    await message.edit(f"<b>Pong! {round(end - start, 3)}ms</b>")
 
 
 modules_help["p"] = {
