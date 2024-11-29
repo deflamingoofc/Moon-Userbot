@@ -18,6 +18,7 @@ db_type = os.getenv("DATABASE_TYPE", env.str("DATABASE_TYPE"))
 db_url = os.getenv("DATABASE_URL", env.str("DATABASE_URL", ""))
 db_name = os.getenv("DATABASE_NAME", env.str("DATABASE_NAME"))
 
+LOG_GROUP = os.getenv("LOG_GROUP", env.str("LOG_GROUP"))
 
 test_server = bool(os.getenv("TEST_SERVER", env.bool("TEST_SERVER", False)))
 modules_repo_branch = os.getenv("MODULES_REPO_BRANCH", env.str("MODULES_REPO_BRANCH", "master"))
