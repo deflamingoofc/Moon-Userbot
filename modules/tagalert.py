@@ -3,23 +3,8 @@ from pyrogram.types import Message
 
 from utils.config import LOG_GROUP
 from utils.misc import modules_help, prefix
-log = []
 
 
-@Client.on_message(filters.command("tagalert on", prefix) & filters.me)
-async def set_no_log_p_m(client: Client, message: Message):
-    if LOG_GROUP != -100:
-        if not message.chat.id in log:
-            log.append(message.chat.id)
-            await message.edit("**Tag alert Activated Successfully**")
-
-@Client.on_message(filters.command("tagalert off", prefix) & filters.me)
-async def set_no_log_p_m(client: Client, message: Message):
-        if not message.chat.id in log:
-            log.remove(message.chat.id)
-            await message.edit("**Tag alert DeActivated Successfully**")
-
-if log:
  @Client.on_message(filters.group & filters.mentioned & filters.incoming)
  async def log_tagged_messages(client: Client, message: Message):
     result = f"<b>📨 #TAGS #MESSAGE</b>\n<b> • : </b>{message.from_user.mention}"
