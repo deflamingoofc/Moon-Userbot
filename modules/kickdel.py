@@ -1,5 +1,12 @@
 from pyrogram import Client, filters
-from pyrogram.types import Message
+
+from pyrogram.errors import (
+    UserAdminInvalid,
+    ChatAdminRequired,
+    RPCError,
+)
+
+from pyrogram.types import Message, ChatPermissions
 
 from utils.misc import modules_help, prefix
 from utils.handlers import (
