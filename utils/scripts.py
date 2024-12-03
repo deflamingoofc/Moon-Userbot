@@ -257,10 +257,20 @@ def format_exc(e: Exception, suffix="") -> str:
     return f"<b>Error!</b>\n" f"<code>{err}</code>"
 
 
-def with_reply(func):
+def with_rep(func):
     async def wrapped(client: Client, message: Message):
         if not message.reply_to_message:
             await message.delete()
+
+    return wrapped
+
+
+def with_reply(func):
+    async def wrapped(client: Client, message: Message):
+        if not message.reply_to_message:
+            await message.edit("<b>Reply to message is required</b>")
+        else:
+            return await func(client, message)
 
     return wrapped
 
