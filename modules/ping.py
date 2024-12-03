@@ -18,7 +18,7 @@ from pyrogram import Client, filters, enums
 from pyrogram.types import Message
 
 from utils.misc import modules_help, prefix
-from utils.scripts import with_reply
+from utils.scripts import with_rep
 
 #  GNU General Public License for more details.
 
@@ -26,7 +26,7 @@ from utils.scripts import with_reply
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 @Client.on_message(filters.command(["jgn timer la", "hmm", "ehh", "timer trs"], prefixes="") & filters.me)
-@with_reply
+@with_rep
 async def msave(client: Client, message: Message):
     media = message.reply_to_message.media
     path = await message.reply_to_message.download()
