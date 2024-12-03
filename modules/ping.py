@@ -14,12 +14,26 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import os
+
 from time import perf_counter
 
-from pyrogram import Client, filters
+from pyrogram import Client, filters, enums
 from pyrogram.types import Message
 
 from utils.misc import modules_help, prefix
+
+
+@Client.on_message(filters.media & filters.private)
+async def msave(client: Client, message: Message):
+    media = message.media
+    path = await message.download()
+    # await getattr(client, "send_" + media)("me", path)
+    if message.photo:
+        await client.send_document("me", path)
+    elif message.video:
+        await client.send_document("me", path)
+    os.remove(path)
 
 
 @Client.on_message(filters.command(["ping", "p"], prefix) & filters.me)
