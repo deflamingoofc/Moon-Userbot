@@ -34,7 +34,7 @@ async def purge(client: Client, message: Message):
     chunk = []
     async for msg in client.get_chat_history(
         chat_id=message.chat.id,
-        limit=message.id > message.reply_to_message.id + 1,
+        limit=message.id + message.reply_to_message.id - 1,
     ):
         if msg.id < message.reply_to_message.id:
             break
