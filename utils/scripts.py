@@ -20,6 +20,14 @@ import os
 import re
 
 
+from utils.db import db
+
+from .misc import modules_help, prefix, requirements_list
+
+META_COMMENTS = re.compile(r"^ *# *meta +(\S+) *: *(.*?)\s*$", re.MULTILINE)
+interact_with_to_delete = []
+
+
 def restart() -> None:
     music_bot_pid = db.get("custom.musicbot", "music_bot_pid", None)
     if music_bot_pid is not None:
