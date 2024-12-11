@@ -57,7 +57,6 @@ from pyrogram.raw.functions.account import GetAuthorizations, DeleteAccount
 
 from utils import config
 from utils.db import db
-from utils.misc import gitrepo, userbot_version
 from utils.scripts import restart, load_module
 
 script_path = os.path.dirname(os.path.realpath(__file__))
