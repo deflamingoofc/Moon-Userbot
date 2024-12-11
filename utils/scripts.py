@@ -137,3 +137,11 @@ async def unload_module(module_name: str, client: Client) -> bool:
     del sys.modules[path]
 
     return True
+
+def parse_meta_comments(code: str) -> Dict[str, str]:
+    try:
+        groups = META_COMMENTS.search(code).groups()
+    except AttributeError:
+        return {}
+
+    return {groups[i]: groups[i + 1] for i in range(0, len(groups), 2)}
