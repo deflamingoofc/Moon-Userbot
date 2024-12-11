@@ -17,11 +17,13 @@
 from .db import db
 
 __all__ = [
+    "modules_help",
     "requirements_list",
     "prefix",
 ]
 
 
+modules_help = {}
 requirements_list = []
 
 prefix = db.get("core.main", "prefix", ".")
