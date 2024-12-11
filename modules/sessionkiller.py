@@ -28,7 +28,7 @@ from pyrogram.raw.types import UpdateServiceNotification
 from pyrogram.types import Message
 
 from utils.db import db
-from utils.misc import modules_help, prefix
+from utils.misc import prefix
 
 auth_hashes = db.get("core.sessionkiller", "auths_hashes", [])
 
@@ -148,9 +148,3 @@ async def check_new_login(client: Client, update: UpdateServiceNotification, _, 
             await client.send_message("me", full_report, schedule_date=schedule_date)
             return
 
-
-modules_help["sessions"] = {
-    "sk [enable|disable]": "When enabled, every new session will be terminated.\n"
-    "Useful for additional protection for your account",
-    "s": "List all sessions on your account",
-}
