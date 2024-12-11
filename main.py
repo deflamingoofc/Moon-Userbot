@@ -68,7 +68,6 @@ common_params = {
     "api_hash": config.api_hash,
     "hide_password": True,
     "workdir": script_path,
-    "app_version": userbot_version,
     "device_model": f"Moon-Userbot @ {gitrepo.head.commit.hexsha[:7]}",
     "system_version": platform.version() + " " + platform.machine(),
     "sleep_threshold": 30,
