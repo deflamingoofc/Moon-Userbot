@@ -29,7 +29,7 @@ from pyrogram.types import Message
 
 from utils.db import db
 
-from .misc import prefix, requirements_list
+from .misc import modules_help, prefix, requirements_list
 
 META_COMMENTS = re.compile(r"^ *# *meta +(\S+) *: *(.*?)\s*$", re.MULTILINE)
 interact_with_to_delete = []
