@@ -18,21 +18,13 @@ import asyncio
 import importlib
 import os
 import re
-import shlex
 import subprocess
 import sys
-import time
-import traceback
-from PIL import Image
-from io import BytesIO
 from types import ModuleType
-from typing import Dict, Tuple
 
 import psutil
-from pyrogram import Client, errors, enums, filters
-from pyrogram.errors import FloodWait, MessageNotModified, UserNotParticipant
+from pyrogram import Client
 from pyrogram.types import Message
-from pyrogram.enums import ChatMembersFilter
 
 from utils.db import db
 
