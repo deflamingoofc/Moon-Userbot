@@ -21,6 +21,7 @@ import re
 import subprocess
 import sys
 from types import ModuleType
+from typing import Dict
 
 import psutil
 from pyrogram import Client
