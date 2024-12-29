@@ -18,27 +18,8 @@ from helpers.utils import (
     send_media
 )
 
-from config import (
-    API_ID,
-    API_HASH,
-    SESSION_STRING
-)
 
-# Initialize the bot client
-bot = Client(
-    "media_bot",
-    api_id=API_ID,
-    api_hash=API_HASH,
-)
-
-# Client for user session
-user = Client(
-    "user_session",
-    session_string=SESSION_STRING
-)
-
-
-@bot.on_message(filters.command("dl") & filters.private)
+@Client.on_message(filters.command("dl") & filters.private)
 async def download_media(bot, message: Message):
     if len(message.command) < 2:
         await message.reply("Provide a post URL after the /dl command.")
@@ -90,5 +71,3 @@ async def download_media(bot, message: Message):
     except Exception as e:
         error_message = f"Failed to download the media: {str(e)}"
         await message.reply(error_message)
-
-if __name__ == "__main__":
