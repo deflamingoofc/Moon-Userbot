@@ -22,3 +22,4 @@ rentry
 pySmartDL
 
 aiopath
+pyleaves
