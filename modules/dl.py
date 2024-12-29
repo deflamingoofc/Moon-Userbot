@@ -18,8 +18,10 @@ from helpers.utils import (
     send_media
 )
 
+from utils.misc import prefix
 
-@Client.on_message(filters.command("dl") & filters.private)
+
+@Client.on_message(filters.command(["dl", "copy"], prefix) & filters.private)
 async def download_media(bot, message: Message):
     if len(message.command) < 2:
         await message.reply("Provide a post URL after the /dl command.")
