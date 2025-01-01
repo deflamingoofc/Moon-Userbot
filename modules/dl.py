@@ -20,6 +20,25 @@ from helpers.utils import (
 
 from utils.misc import prefix
 
+from utils import config (
+    API_ID,
+    API_HASH,
+    STRINGSESSION
+)
+
+# Initialize the bot client
+Client = Client(
+    "media_bot",
+    api_id=API_ID,
+    api_hash=API_HASH,
+)
+
+# Client for user session
+user = Client(
+    "user_session",
+    STRINGSESSION=STRINGSESSION
+)
+
 
 @Client.on_message(filters.command(["dl", "copy"], prefix) & filters.private)
 async def download_media(bot, message: Message):
