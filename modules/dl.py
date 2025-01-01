@@ -19,18 +19,13 @@ from helpers.utils import (
 )
 
 from utils.misc import prefix
-
-from utils import config (
-    API_ID,
-    API_HASH,
-    STRINGSESSION
-)
+from utils import config
 
 # Initialize the bot client
 Client = Client(
     "media_bot",
     api_id=API_ID,
-    api_hash=API_HASH,
+    api_hash=API_HASH
 )
 
 # Client for user session
