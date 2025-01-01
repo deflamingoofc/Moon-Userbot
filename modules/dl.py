@@ -24,14 +24,14 @@ from utils import config
 # Initialize the bot client
 Client = Client(
     "media_bot",
-    api_id=API_ID,
-    api_hash=API_HASH
+    api_id,
+    api_hash
 )
 
 # Client for user session
 user = Client(
     "user_session",
-    STRINGSESSION=STRINGSESSION
+    STRINGSESSION
 )
 
 
