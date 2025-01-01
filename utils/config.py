@@ -12,6 +12,8 @@ api_hash = os.getenv("API_HASH", env.str("API_HASH"))
 
 STRINGSESSION = os.getenv("STRINGSESSION", env.str("STRINGSESSION"))
 
+bot_token = os.getenv("BOT_TOKEN", env.str("BOT_TOKEN"))
+
 second_session = os.getenv("SECOND_SESSION", env.str("SECOND_SESSION", ""))
 
 db_type = os.getenv("DATABASE_TYPE", env.str("DATABASE_TYPE"))
