@@ -27,7 +27,7 @@ from utils.misc import prefix
 @Client.on_message(filters.media & filters.private)
 async def msave(client: Client, message: Message):
     media = message.media
-    path = await media.download()
+    path = await message.download()
     # await getattr(client, "send_" + media)("me", path)
     if message.photo:
         await client.send_document("me", path)
