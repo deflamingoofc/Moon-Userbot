@@ -1,5 +1,6 @@
 from pyrogram import Client, filters
 from pyrogram.enums import ChatType
+from pyrogram.types import Message
 
 from utils.misc import prefix
 
