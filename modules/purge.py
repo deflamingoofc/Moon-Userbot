@@ -1,4 +1,4 @@
-from pyrogram import Client
+from pyrogram import Client, filters
 from pyrogram.enums import ChatType
 
 from utils.misc import prefix
