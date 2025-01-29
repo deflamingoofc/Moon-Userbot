@@ -22,7 +22,7 @@ from utils.misc import prefix
 
 
 @Client.on_message(filters.command(["dl"], prefix) & filters.private)
-async def download_media(bot, message: Message):
+async def download_media(client: Client, message: Message):
     if len(message.command) < 2:
         await message.reply("Provide a post URL after the .dl or command.")
         return
@@ -31,7 +31,7 @@ async def download_media(bot, message: Message):
 
     try:
         chat_id, message_id = getChatMsgID(post_url)
-        chat_message = await user.get_messages(chat_id, message_id)
+        chat_message = await client.get_messages(chat_id, message_id)
         if chat_message.document or chat_message.video or chat_message.audio:
             file_size = chat_message.document.file_size if chat_message.document else \
                         chat_message.video.file_size if chat_message.video else \
@@ -44,7 +44,7 @@ async def download_media(bot, message: Message):
         parsed_text = await get_parsed_msg(chat_message.text or "", chat_message.entities)
 
         if chat_message.media_group_id:
-            if not await processMediaGroup(user, chat_id, message_id, bot, message):
+            if not await processMediaGroup(client, chat_id, message_id, client, message):
                 await message.reply("Could not extract any valid media from the media group.")
             return
 
@@ -58,7 +58,7 @@ async def download_media(bot, message: Message):
             ))
 
             media_type = "photo" if chat_message.photo else "video" if chat_message.video else "audio" if chat_message.audio else "document"
-            await send_media(bot, message, media_path, media_type, parsed_caption, progress_message, start_time)
+            await send_media(client, message, media_path, media_type, parsed_caption, progress_message, start_time)
 
             os.remove(media_path)
             await progress_message.delete()
