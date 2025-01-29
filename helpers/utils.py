@@ -90,7 +90,7 @@ Estimated Time Left: {est_time} seconds
 # Function to extract chat ID and message ID from URL
 def getChatMsgID(url: str):
     parts = url.split("/")
-    chat_id = int(parts[-2]) or int("-100" + parts[-2])
+    chat_id = int("-100" + parts[-2])
     message_id = int(parts[-1])
     return chat_id, message_id
     
