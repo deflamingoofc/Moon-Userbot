@@ -21,20 +21,6 @@ from helpers.utils import (
 from utils.misc import prefix
 
 
-# Initialize the bot client
-bot = Client(
-    "media_bot",
-    api_id=API_ID,
-    api_hash=API_HASH,
-    bot_token=BOT_TOKEN,
-)
-
-# Client for user session
-user = Client(
-    "user_session",
-    session_string=SESSION_STRING
-)
-
 @Client.on_message(filters.command(["dl"], prefix) & filters.private)
 async def download_media(bot, message: Message):
     if len(message.command) < 2:
