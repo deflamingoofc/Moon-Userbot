@@ -19,10 +19,10 @@ from helpers.utils import (
 
 from utils.misc import prefix
 
-@Client.on_message(filters.command("dl") & filters.private)
+@Client.on_message(filters.command(["dl", "download"], prefix) & filters.private)
 async def download_media(client: Client, message: Message):
     if len(message.command) < 2:
-        await message.reply("Provide a post URL after the /dl command.")
+        await message.reply("Provide a post URL after the .dl or .download command.")
         return
 
     post_url = message.command[1]
