@@ -8,17 +8,6 @@ from pyleaves import Leaves
 from collections import defaultdict
 from pyrogram.types import InputMediaPhoto, InputMediaVideo
 
-# Maximum file size limit to 2GB
-MAX_FILE_SIZE = 2 * 1024 * 1024 * 1024  # If your telegram account is premium then use 4GB
-
-def chkFileSize(file_size):
-    return file_size <= MAX_FILE_SIZE
-
-async def fileSizeLimit(file_size, message, action_type="download"):
-    if not chkFileSize(file_size):
-        await message.reply(f"The file size exceeds the {MAX_FILE_SIZE / (1024 * 1024 * 1024):.2f}GB limit and cannot be {action_type}ed.")
-        return False
-    return True
 
 priority = {
     enums.MessageEntityType.BOLD: 1,
@@ -107,11 +96,6 @@ def progressArgs(action: str, progress_message, start_time):
     )
 
 async def send_media(client, message, media_path, media_type, caption, progress_message, start_time):
-    file_size = os.path.getsize(media_path)
-    
-    if not await fileSizeLimit(file_size, message, "upload"):
-        return
-    
     progress_args = progressArgs("📥 Uploading Progress", progress_message, start_time)
 
     if media_type == "photo":
