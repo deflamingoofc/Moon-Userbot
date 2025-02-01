@@ -12,7 +12,6 @@ from helpers.utils import (
     processMediaGroup,
     get_parsed_msg,
     PROGRESS_BAR,
-    fileSizeLimit,
     getChatMsgID,
     progressArgs,
     send_media
