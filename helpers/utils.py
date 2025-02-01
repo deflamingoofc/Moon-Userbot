@@ -139,6 +139,6 @@ async def processMediaGroup(client, chat_id, message_id, message):
             media_list.append(InputMediaVideo(media=msg.video.file_id, caption=await get_parsed_msg(msg.caption or "", msg.caption_entities)))
 
     if media_list:
-        await client.send_media_group(chat_id=message.chat.id, media=media_list)
+        await client.send_media_group_messages(chat_id=message.chat.id, media=media_list)
         return True
     return False
