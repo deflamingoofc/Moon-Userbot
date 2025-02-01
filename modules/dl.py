@@ -31,14 +31,6 @@ async def download_media(client: Client, message: Message):
     try:
         chat_id, message_id = getChatMsgID(post_url)
         chat_message = await client.get_messages(chat_id, message_id)
-        if chat_message.document or chat_message.video or chat_message.audio:
-            file_size = chat_message.document.file_size if chat_message.document else \
-                        chat_message.video.file_size if chat_message.video else \
-                        chat_message.audio.file_size
-
-            if not await fileSizeLimit(file_size, message, "download"):
-                return
-
         parsed_caption = await get_parsed_msg(chat_message.caption or "", chat_message.caption_entities)
         parsed_text = await get_parsed_msg(chat_message.text or "", chat_message.entities)
 
