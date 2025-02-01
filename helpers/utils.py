@@ -106,7 +106,7 @@ def progressArgs(action: str, progress_message, start_time):
         '░'
     )
 
-async def send_media(bot, message, media_path, media_type, caption, progress_message, start_time):
+async def send_media(client, message, media_path, media_type, caption, progress_message, start_time):
     file_size = os.path.getsize(media_path)
     
     if not await fileSizeLimit(file_size, message, "upload"):
@@ -144,8 +144,8 @@ async def send_media(bot, message, media_path, media_type, caption, progress_mes
         )
 
 # Helper function to handle media groups
-async def processMediaGroup(user, chat_id, message_id, bot, message):
-    media_group_messages = await user.get_media_group(chat_id, message_id)
+async def processMediaGroup(client, chat_id, message_id, client, message):
+    media_group_messages = await client.get_media_group(chat_id, message_id)
     media_list = []
 
     for msg in media_group_messages:
@@ -155,6 +155,6 @@ async def processMediaGroup(user, chat_id, message_id, bot, message):
             media_list.append(InputMediaVideo(media=msg.video.file_id, caption=await get_parsed_msg(msg.caption or "", msg.caption_entities)))
 
     if media_list:
-        await bot.send_media_group(chat_id=message.chat.id, media=media_list)
+        await client.send_media_group(chat_id=message.chat.id, media=media_list)
         return True
     return False
