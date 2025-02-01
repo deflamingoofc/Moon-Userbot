@@ -1,12 +1,12 @@
-import pyrogram
-from pyrogram import Client, filters
-from pyrogram.errors import UserAlreadyParticipant, InviteHashExpired, UsernameNotOccupied
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-
 import time
 import os
 import threading
 import json
+import pyrogram
+
+from pyrogram import Client, filters
+from pyrogram.errors import UserAlreadyParticipant, InviteHashExpired, UsernameNotOccupied
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 from utils.misc import prefix
 
@@ -59,12 +59,12 @@ def save(client: pyrogram.client.Client, message: pyrogram.types.messages_and_me
 	# joining chats
 	if "https://t.me/+" in message.text or "https://t.me/joinchat/" in message.text:
 
-		if acc is None:
+		if client is None:
 			client.send_message(message.chat.id,f"**String Session is not Set**", reply_to_message_id=message.id)
 			return
 
 		try:
-			try: acc.join_chat(message.text)
+			try: client.join_chat(message.text)
 			except Exception as e: 
 				client.send_message(message.chat.id,f"**Error** : __{e}__", reply_to_message_id=message.id)
 				return
