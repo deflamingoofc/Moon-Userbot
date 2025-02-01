@@ -89,7 +89,7 @@ def save(client: pyrogram.client.Client, message: pyrogram.types.messages_and_me
 			if "https://t.me/c/" in message.text:
 				chatid = int("-100" + datas[4])
 				
-				if acc is None:
+				if client is None:
 					client.send_message(message.chat.id,f"**String Session is not Set**", reply_to_message_id=message.id)
 					return
 				
@@ -101,7 +101,7 @@ def save(client: pyrogram.client.Client, message: pyrogram.types.messages_and_me
 			elif "https://t.me/b/" in message.text:
 				username = datas[4]
 				
-				if acc is None:
+				if client is None:
 					client.send_message(message.chat.id,f"**String Session is not Set**", reply_to_message_id=message.id)
 					return
 				try: handle_private(message,username,msgid)
@@ -121,7 +121,7 @@ def save(client: pyrogram.client.Client, message: pyrogram.types.messages_and_me
 					else:
 						client.copy_media_group(message.chat.id, msg.chat.id, msg.id, reply_to_message_id=message.id)
 				except:
-					if acc is None:
+					if client is None:
 						client.send_message(message.chat.id,f"**String Session is not Set**", reply_to_message_id=message.id)
 						return
 					try: handle_private(message,username,msgid)
@@ -133,7 +133,7 @@ def save(client: pyrogram.client.Client, message: pyrogram.types.messages_and_me
 
 # handle private
 def handle_private(message: pyrogram.types.messages_and_media.message.Message, chatid: int, msgid: int):
-		msg: pyrogram.types.messages_and_media.message.Message = acc.get_messages(chatid,msgid)
+		msg: pyrogram.types.messages_and_media.message.Message = client.get_messages(chatid,msgid)
 		msg_type = get_message_type(msg)
 
 		if "Text" == msg_type:
@@ -143,7 +143,7 @@ def handle_private(message: pyrogram.types.messages_and_media.message.Message, c
 		smsg = client.send_message(message.chat.id, '__Downloading__', reply_to_message_id=message.id)
 		dosta = threading.Thread(target=lambda:downstatus(f'{message.id}downstatus.txt',smsg),daemon=True)
 		dosta.start()
-		file = acc.download_media(msg, progress=progress, progress_args=[message,"down"])
+		file = client.download_media(msg, progress=progress, progress_args=[message,"down"])
 		os.remove(f'{message.id}downstatus.txt')
 
 		upsta = threading.Thread(target=lambda:upstatus(f'{message.id}upstatus.txt',smsg),daemon=True)
@@ -151,7 +151,7 @@ def handle_private(message: pyrogram.types.messages_and_media.message.Message, c
 		
 		if "Document" == msg_type:
 			try:
-				thumb = acc.download_media(msg.document.thumbs[0].file_id)
+				thumb = client.download_media(msg.document.thumbs[0].file_id)
 			except: thumb = None
 			
 			client.send_document(message.chat.id, file, thumb=thumb, caption=msg.caption, caption_entities=msg.caption_entities, reply_to_message_id=message.id, progress=progress, progress_args=[message,"up"])
@@ -159,7 +159,7 @@ def handle_private(message: pyrogram.types.messages_and_media.message.Message, c
 
 		elif "Video" == msg_type:
 			try: 
-				thumb = acc.download_media(msg.video.thumbs[0].file_id)
+				thumb = client.download_media(msg.video.thumbs[0].file_id)
 			except: thumb = None
 
 			client.send_video(message.chat.id, file, duration=msg.video.duration, width=msg.video.width, height=msg.video.height, thumb=thumb, caption=msg.caption, caption_entities=msg.caption_entities, reply_to_message_id=message.id, progress=progress, progress_args=[message,"up"])
@@ -176,7 +176,7 @@ def handle_private(message: pyrogram.types.messages_and_media.message.Message, c
 
 		elif "Audio" == msg_type:
 			try:
-				thumb = acc.download_media(msg.audio.thumbs[0].file_id)
+				thumb = client.download_media(msg.audio.thumbs[0].file_id)
 			except: thumb = None
 				
 			client.send_audio(message.chat.id, file, caption=msg.caption, caption_entities=msg.caption_entities, reply_to_message_id=message.id, progress=progress, progress_args=[message,"up"])   
