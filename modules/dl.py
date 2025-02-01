@@ -7,6 +7,7 @@ import pyrogram
 from pyrogram import Client, filters
 from pyrogram.errors import UserAlreadyParticipant, InviteHashExpired, UsernameNotOccupied
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram.types import Message
 
 from utils.misc import prefix
 
@@ -133,7 +134,7 @@ def save(client: Client, message: Message):
 
 # handle private
 def handle_private(client: Client, message: Message):
-		msg: pyrogram.types.messages_and_media.message.Message = client.get_messages(chatid,msgid)
+		msg: Message = await client.get_messages(chatid,msgid)
 		msg_type = get_message_type(msg)
 
 		if "Text" == msg_type:
