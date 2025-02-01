@@ -144,7 +144,7 @@ async def send_media(client, message, media_path, media_type, caption, progress_
         )
 
 # Helper function to handle media groups
-async def processMediaGroup(client, chat_id, message_id, client, message):
+async def processMediaGroup(client, chat_id, message_id, message):
     media_group_messages = await client.get_media_group(chat_id, message_id)
     media_list = []
 
