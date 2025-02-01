@@ -53,7 +53,7 @@ def progress(current, total, message, type):
 
 # command
 @Client.on_message(filters.command(["dl", "save"], prefix) & filters.me)
-def save(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
+def save(client: Client, message: Message):
 	print(message.text)
 
 	# joining chats
@@ -132,7 +132,7 @@ def save(client: pyrogram.client.Client, message: pyrogram.types.messages_and_me
 
 
 # handle private
-def handle_private(message: pyrogram.types.messages_and_media.message.Message, chatid: int, msgid: int):
+def handle_private(client: Client, message: Message):
 		msg: pyrogram.types.messages_and_media.message.Message = client.get_messages(chatid,msgid)
 		msg_type = get_message_type(msg)
 
@@ -191,7 +191,7 @@ def handle_private(message: pyrogram.types.messages_and_media.message.Message, c
 
 
 # get the type of message
-def get_message_type(msg: pyrogram.types.messages_and_media.message.Message):
+def get_message_type(client: Client, message: Message):
 	try:
 		msg.document.file_id
 		return "Document"
