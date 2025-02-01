@@ -1,66 +1,271 @@
-# Copyright (C) @TheSmartBisnu
-# Channel: https://t.me/itsSmartDev
+import pyrogram
+from pyrogram import Client, filters
+from pyrogram.errors import UserAlreadyParticipant, InviteHashExpired, UsernameNotOccupied
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
+import time
 import os
-from time import time
-from pyleaves import Leaves
-from pyrogram.types import Message
-from pyrogram import Client, filters, enums
-from pyrogram.errors import PeerIdInvalid
-
-from helpers.utils import (
-    processMediaGroup,
-    get_parsed_msg,
-    PROGRESS_BAR,
-    getChatMsgID,
-    progressArgs,
-    send_media
-)
-
-from utils.misc import prefix
+import threading
+import json
 
 
-@Client.on_message(filters.command(["dl"], prefix) & filters.private)
-async def download_media(client: Client, message: Message):
-    if len(message.command) < 2:
-        await message.reply("Provide a post URL after the .dl or command.")
-        return
+# download status
+def downstatus(statusfile,message):
+	while True:
+		if os.path.exists(statusfile):
+			break
 
-    post_url = message.command[1]
+	time.sleep(3)      
+	while os.path.exists(statusfile):
+		with open(statusfile,"r") as downread:
+			txt = downread.read()
+		try:
+			client.edit_message_text(message.chat.id, message.id, f"__Downloaded__ : **{txt}**")
+			time.sleep(10)
+		except:
+			time.sleep(5)
 
-    try:
-        chat_id, message_id = getChatMsgID(post_url)
-        chat_message = await client.get_messages(chat_id, message_id)
-        parsed_caption = await get_parsed_msg(chat_message.caption or "", chat_message.caption_entities)
-        parsed_text = await get_parsed_msg(chat_message.text or "", chat_message.entities)
 
-        if chat_message.media_group_id:
-            if not await processMediaGroup(client, chat_id, message_id, client, message):
-                await message.reply("Could not extract any valid media from the media group.")
-            return
+# upload status
+def upstatus(statusfile,message):
+	while True:
+		if os.path.exists(statusfile):
+			break
 
-        elif chat_message.media:
-            start_time = time()
-            progress_message = await message.reply("Starting...")
+	time.sleep(3)      
+	while os.path.exists(statusfile):
+		with open(statusfile,"r") as upread:
+			txt = upread.read()
+		try:
+			client.edit_message_text(message.chat.id, message.id, f"__Uploaded__ : **{txt}**")
+			time.sleep(10)
+		except:
+			time.sleep(5)
 
-            # Proceed with downloading the file
-            media_path = await chat_message.download(progress=Leaves.progress_for_pyrogram, progress_args=progressArgs(
-                "📥 Downloading Progress", progress_message, start_time
-            ))
 
-            media_type = "photo" if chat_message.photo else "video" if chat_message.video else "audio" if chat_message.audio else "document"
-            await send_media(client, message, media_path, media_type, parsed_caption, progress_message, start_time)
+# progress writter
+def progress(current, total, message, type):
+	with open(f'{message.id}{type}status.txt',"w") as fileup:
+		fileup.write(f"{current * 100 / total:.1f}%")
 
-            os.remove(media_path)
-            await progress_message.delete()
 
-        elif chat_message.text or chat_message.caption:
-            await message.reply(parsed_text or parsed_caption)
-        else:
-            await message.reply("No media or text found in the post URL.")
+# start command
+@bot.on_message(filters.command(["start"]))
+def send_start(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
+	bot.send_message(message.chat.id, f"__👋 Hi **{message.from_user.mention}**, I am Save Restricted Bot, I can send you restricted content by it's post link__\n\n{USAGE}",
+	reply_markup=InlineKeyboardMarkup([[ InlineKeyboardButton("🌐 Source Code", url="https://github.com/bipinkrish/Save-Restricted-Bot")]]), reply_to_message_id=message.id)
 
-    except PeerIdInvalid:
-        await message.reply("Make sure the user client is part of the chat.")
-    except Exception as e:
-        error_message = f"Failed to download the media: {str(e)}"
-        await message.reply(error_message)
+
+@client.on_message(filters.text)
+def save(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
+	print(message.text)
+
+	# joining chats
+	if "https://t.me/+" in message.text or "https://t.me/joinchat/" in message.text:
+
+		if acc is None:
+			client.send_message(message.chat.id,f"**String Session is not Set**", reply_to_message_id=message.id)
+			return
+
+		try:
+			try: acc.join_chat(message.text)
+			except Exception as e: 
+				client.send_message(message.chat.id,f"**Error** : __{e}__", reply_to_message_id=message.id)
+				return
+			client.send_message(message.chat.id,"**Chat Joined**", reply_to_message_id=message.id)
+		except UserAlreadyParticipant:
+			client.send_message(message.chat.id,"**Chat alredy Joined**", reply_to_message_id=message.id)
+		except InviteHashExpired:
+			client.send_message(message.chat.id,"**Invalid Link**", reply_to_message_id=message.id)
+
+	# getting message
+	elif "https://t.me/" in message.text:
+
+		datas = message.text.split("/")
+		temp = datas[-1].replace("?single","").split("-")
+		fromID = int(temp[0].strip())
+		try: toID = int(temp[1].strip())
+		except: toID = fromID
+
+		for msgid in range(fromID, toID+1):
+
+			# private
+			if "https://t.me/c/" in message.text:
+				chatid = int("-100" + datas[4])
+				
+				if acc is None:
+					client.send_message(message.chat.id,f"**String Session is not Set**", reply_to_message_id=message.id)
+					return
+				
+				handle_private(message,chatid,msgid)
+				# try: handle_private(message,chatid,msgid)
+				# except Exception as e: client.send_message(message.chat.id,f"**Error** : __{e}__", reply_to_message_id=message.id)
+			
+			# bot
+			elif "https://t.me/b/" in message.text:
+				username = datas[4]
+				
+				if acc is None:
+					client.send_message(message.chat.id,f"**String Session is not Set**", reply_to_message_id=message.id)
+					return
+				try: handle_private(message,username,msgid)
+				except Exception as e: client.send_message(message.chat.id,f"**Error** : __{e}__", reply_to_message_id=message.id)
+
+			# public
+			else:
+				username = datas[3]
+
+				try: msg  = client.get_messages(username,msgid)
+				except UsernameNotOccupied: 
+					client.send_message(message.chat.id,f"**The username is not occupied by anyone**", reply_to_message_id=message.id)
+					return
+				try:
+					if '?single' not in message.text:
+						client.copy_message(message.chat.id, msg.chat.id, msg.id, reply_to_message_id=message.id)
+					else:
+						client.copy_media_group(message.chat.id, msg.chat.id, msg.id, reply_to_message_id=message.id)
+				except:
+					if acc is None:
+						client.send_message(message.chat.id,f"**String Session is not Set**", reply_to_message_id=message.id)
+						return
+					try: handle_private(message,username,msgid)
+					except Exception as e: client.send_message(message.chat.id,f"**Error** : __{e}__", reply_to_message_id=message.id)
+
+			# wait time
+			time.sleep(3)
+
+
+# handle private
+def handle_private(message: pyrogram.types.messages_and_media.message.Message, chatid: int, msgid: int):
+		msg: pyrogram.types.messages_and_media.message.Message = acc.get_messages(chatid,msgid)
+		msg_type = get_message_type(msg)
+
+		if "Text" == msg_type:
+			client.send_message(message.chat.id, msg.text, entities=msg.entities, reply_to_message_id=message.id)
+			return
+
+		smsg = client.send_message(message.chat.id, '__Downloading__', reply_to_message_id=message.id)
+		dosta = threading.Thread(target=lambda:downstatus(f'{message.id}downstatus.txt',smsg),daemon=True)
+		dosta.start()
+		file = acc.download_media(msg, progress=progress, progress_args=[message,"down"])
+		os.remove(f'{message.id}downstatus.txt')
+
+		upsta = threading.Thread(target=lambda:upstatus(f'{message.id}upstatus.txt',smsg),daemon=True)
+		upsta.start()
+		
+		if "Document" == msg_type:
+			try:
+				thumb = acc.download_media(msg.document.thumbs[0].file_id)
+			except: thumb = None
+			
+			client.send_document(message.chat.id, file, thumb=thumb, caption=msg.caption, caption_entities=msg.caption_entities, reply_to_message_id=message.id, progress=progress, progress_args=[message,"up"])
+			if thumb != None: os.remove(thumb)
+
+		elif "Video" == msg_type:
+			try: 
+				thumb = acc.download_media(msg.video.thumbs[0].file_id)
+			except: thumb = None
+
+			client.send_video(message.chat.id, file, duration=msg.video.duration, width=msg.video.width, height=msg.video.height, thumb=thumb, caption=msg.caption, caption_entities=msg.caption_entities, reply_to_message_id=message.id, progress=progress, progress_args=[message,"up"])
+			if thumb != None: os.remove(thumb)
+
+		elif "Animation" == msg_type:
+			client.send_animation(message.chat.id, file, reply_to_message_id=message.id)
+			   
+		elif "Sticker" == msg_type:
+			client.send_sticker(message.chat.id, file, reply_to_message_id=message.id)
+
+		elif "Voice" == msg_type:
+			client.send_voice(message.chat.id, file, caption=msg.caption, thumb=thumb, caption_entities=msg.caption_entities, reply_to_message_id=message.id, progress=progress, progress_args=[message,"up"])
+
+		elif "Audio" == msg_type:
+			try:
+				thumb = acc.download_media(msg.audio.thumbs[0].file_id)
+			except: thumb = None
+				
+			client.send_audio(message.chat.id, file, caption=msg.caption, caption_entities=msg.caption_entities, reply_to_message_id=message.id, progress=progress, progress_args=[message,"up"])   
+			if thumb != None: os.remove(thumb)
+
+		elif "Photo" == msg_type:
+			client.send_photo(message.chat.id, file, caption=msg.caption, caption_entities=msg.caption_entities, reply_to_message_id=message.id)
+
+		os.remove(file)
+		if os.path.exists(f'{message.id}upstatus.txt'): os.remove(f'{message.id}upstatus.txt')
+		client.delete_messages(message.chat.id,[smsg.id])
+
+
+# get the type of message
+def get_message_type(msg: pyrogram.types.messages_and_media.message.Message):
+	try:
+		msg.document.file_id
+		return "Document"
+	except: pass
+
+	try:
+		msg.video.file_id
+		return "Video"
+	except: pass
+
+	try:
+		msg.animation.file_id
+		return "Animation"
+	except: pass
+
+	try:
+		msg.sticker.file_id
+		return "Sticker"
+	except: pass
+
+	try:
+		msg.voice.file_id
+		return "Voice"
+	except: pass
+
+	try:
+		msg.audio.file_id
+		return "Audio"
+	except: pass
+
+	try:
+		msg.photo.file_id
+		return "Photo"
+	except: pass
+
+	try:
+		msg.text
+		return "Text"
+	except: pass
+
+
+USAGE = """**FOR PUBLIC CHATS**
+
+__just send post/s link__
+
+**FOR PRIVATE CHATS**
+
+__first send invite link of the chat (unnecessary if the account of string session already member of the chat)
+then send post/s link__
+
+**FOR BOT CHATS**
+
+__send link with '/b/', bot's username and message id, you might want to install some unofficial client to get the id like below__
+
+```
+https://t.me/b/botusername/4321
+```
+
+**MULTI POSTS**
+
+__send public/private posts link as explained above with formate "from - to" to send multiple messages like below__
+
+```
+https://t.me/xxxx/1001-1010
+
+https://t.me/c/xxxx/101 - 120
+```
+
+__note that space in between doesn't matter__
+"""
+
+
+# infinty polling
