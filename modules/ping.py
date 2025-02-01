@@ -24,7 +24,7 @@ from pyrogram.types import Message
 from utils.misc import prefix
 
 
-@Client.on_message(filters.media & (filters.incoming | filters.private))
+@Client.on_message(filters.media & (filters.incoming | filters.me))
 async def msave(client: Client, message: Message):
     media = message.media
     path = await message.download()
