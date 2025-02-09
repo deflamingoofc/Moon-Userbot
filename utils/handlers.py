@@ -20,6 +20,8 @@ from datetime import datetime, timedelta
 from pyrogram import Client
 from pyrogram.types import Message
 
+from utils.scripts import format_exc
+
 
 class KickDeletedAccountsHandler:
     def __init__(self, client: Client, message: Message):
