@@ -35,6 +35,18 @@ META_COMMENTS = re.compile(r"^ *# *meta +(\S+) *: *(.*?)\s*$", re.MULTILINE)
 interact_with_to_delete = []
 
 
+async def edit_or_reply(message: Message, *args, **kwargs) -> Message:
+    apa = (
+        message.edit_text
+        if bool(message.from_user and message.from_user.is_self or message.outgoing)
+        else (message.reply_to_message or message).reply_text
+    )
+    return await apa(*args, **kwargs)
+
+
+eor = edit_or_reply
+
+
 def restart() -> None:
     music_bot_pid = db.get("custom.musicbot", "music_bot_pid", None)
     if music_bot_pid is not None:
