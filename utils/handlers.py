@@ -15,7 +15,10 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
+from datetime import datetime, timedelta
 
+from pyrogram import Client
+from pyrogram.types import Message
 
 
 class KickDeletedAccountsHandler:
