@@ -35,16 +35,18 @@ META_COMMENTS = re.compile(r"^ *# *meta +(\S+) *: *(.*?)\s*$", re.MULTILINE)
 interact_with_to_delete = []
 
 
-async def edit_or_reply(message: Message, *args, **kwargs) -> Message:
-    apa = (
-        message.edit_text
-        if bool(message.from_user and message.from_user.is_self or message.outgoing)
-        else (message.reply_to_message or message).reply_text
-    )
-    return await apa(*args, **kwargs)
+async def edit_or_reply(message, txt):
+    """Edit Message If Its From Self, Else Reply To Message"""
+    if not message:
+        return await message.edit(txt)
+    if not message.from_user:
+        return await message.edit(txt)
+    return await message.edit(txt)
 
 
-eor = edit_or_reply
+def text(message: Message) -> str:
+    """Find text in `Message` object"""
+    return message.text if message.text else message.caption
 
 
 def restart() -> None:
