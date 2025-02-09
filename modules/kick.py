@@ -1,26 +1,28 @@
-# Credits: @mrismanaziz
-# Copyright (C) 2022 Pyro-ManUserbot
+#  Moon-Userbot - telegram userbot
+#  Copyright (C) 2020-present Moon Userbot Organization
 #
-# This file is a part of < https://github.com/mrismanaziz/PyroMan-Userbot/ >
-# PLease read the GNU Affero General Public License in
-# <https://www.github.com/mrismanaziz/PyroMan-Userbot/blob/main/LICENSE/>.
-#
-# t.me/SharingUserbot & t.me/Lunatic0de
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
 
-from pyrogram import Client, enums, filters
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+from pyrogram import Client, filters
 from pyrogram.types import Message
 
 from utils.misc import prefix
-from utils.scripts import edit_or_reply
+from utils.handlers import (
+    KickDeletedAccountsHandler,
+)
 
-
-@Client.on_message(filters.command(["kick", "k"], prefix) & filters.me)
+@Client.on_message(filters.command(["kick"], prefix) & filters.me)
 async def kickdel_cmd(client: Client, message: Message):
-    Man = await edit_or_reply(message, "<b>Kicking deleted accounts...</b>")
-    # noinspection PyTypeChecker
-    values = [
-        await message.chat.ban_member(user.user.id, int(time()) + 31)
-        for member in await message.chat.get_members()
-        if member.user.is_deleted
-    ]
-    await Man.edit(f"<b>Successfully kicked {len(values)} deleted account(s)</b>")
+    handler = KickDeletedAccountsHandler(client, message)
+    await handler.kick_deleted_accounts()
