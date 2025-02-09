@@ -35,20 +35,6 @@ META_COMMENTS = re.compile(r"^ *# *meta +(\S+) *: *(.*?)\s*$", re.MULTILINE)
 interact_with_to_delete = []
 
 
-async def edit_or_reply(message, txt):
-    """Edit Message If Its From Self, Else Reply To Message"""
-    if not message:
-        return await message.edit(txt)
-    if not message.from_user:
-        return await message.edit(txt)
-    return await message.edit(txt)
-
-
-def text(message: Message) -> str:
-    """Find text in `Message` object"""
-    return message.text if message.text else message.caption
-
-
 def restart() -> None:
     music_bot_pid = db.get("custom.musicbot", "music_bot_pid", None)
     if music_bot_pid is not None:
@@ -58,6 +44,17 @@ def restart() -> None:
         except psutil.NoSuchProcess:
             print("Music bot is not running.")
     os.execvp(sys.executable, [sys.executable, "main.py"])
+
+
+def format_exc(e: Exception, suffix="") -> str:
+    traceback.print_exc()
+    err = traceback.format_exc()
+    if isinstance(e, errors.RPCError):
+        return (
+            f"<b>Telegram API error!</b>\n"
+            f"<code>[{e.CODE} {e.ID or e.NAME}] — {e.MESSAGE.format(value=e.value)}</code>\n\n<b>{suffix}</b>"
+        )
+    return f"<b>Error!</b>\n" f"<code>{err}</code>"
 
 
 async def load_module(
