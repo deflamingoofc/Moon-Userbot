@@ -11,6 +11,7 @@ from pyrogram import Client, enums, filters
 from pyrogram.types import Message
 
 from utils.misc import prefix
+from utils.scripts import edit_or_reply
 
 
 @Client.on_message(filters.command(["kick", "k"], prefix) & filters.me)
