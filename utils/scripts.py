@@ -35,6 +35,43 @@ META_COMMENTS = re.compile(r"^ *# *meta +(\S+) *: *(.*?)\s*$", re.MULTILINE)
 interact_with_to_delete = []
 
 
+async def progress(current, total, message, start, type_of_ps, file_name=None):
+    """Progress Bar For Showing Progress While Uploading / Downloading File - Normal"""
+    now = time.time()
+    diff = now - start
+    if round(diff % 10.00) == 0 or current == total:
+        percentage = current * 100 / total
+        speed = current / diff
+        elapsed_time = round(diff) * 1000
+        if elapsed_time == 0:
+            return
+        time_to_completion = round((total - current) / speed) * 1000
+        estimated_total_time = elapsed_time + time_to_completion
+        progress_str = f"{''.join(['▰' for i in range(math.floor(percentage / 10))])}"
+        progress_str += (
+            f"{''.join(['▱' for i in range(10 - math.floor(percentage / 10))])}"
+        )
+        progress_str += f"{round(percentage, 2)}%\n"
+        tmp = f"{progress_str}{humanbytes(current)} of {humanbytes(total)}\n"
+        tmp += f"ETA: {time_formatter(estimated_total_time)}"
+        if file_name:
+            try:
+                await message.edit(
+                    f"{type_of_ps}\n<b>File Name:</b> <code>{file_name}</code>\n{tmp}"
+                )
+            except FloodWait as e:
+                await asyncio.sleep(e.x)
+            except MessageNotModified:
+                pass
+        else:
+            try:
+                await message.edit(f"{type_of_ps}\n{tmp}")
+            except FloodWait as e:
+                await asyncio.sleep(e.x)
+            except MessageNotModified:
+                pass
+
+
 def restart() -> None:
     music_bot_pid = db.get("custom.musicbot", "music_bot_pid", None)
     if music_bot_pid is not None:
