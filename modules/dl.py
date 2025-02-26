@@ -129,7 +129,7 @@ def save(client: Client, message: Message):
 
 
 # handle private
-def handle_private(message: pyrogram.types.messages_and_media.message.Message, chatid: int, msgid: int):
+def handle_private(message: Message, chatid: int, msgid: int):
 		msg: pyrogram.types.messages_and_media.message.Message = client.get_messages(chatid,msgid)
 		msg_type = get_message_type(msg)
 
