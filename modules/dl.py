@@ -58,7 +58,7 @@ def save(client: Client, message: Message):
 	# joining chats
 	if "https://t.me/+" in message.text or "https://t.me/joinchat/" in message.text:
 
-		if acc is None:
+		if client is None:
 			client.send_message(message.chat.id,f"**String Session is not Set**", reply_to_message_id=message.id)
 			return
 
@@ -88,7 +88,7 @@ def save(client: Client, message: Message):
 			if "https://t.me/c/" in message.text:
 				chatid = int("-100" + datas[4])
 				
-				if acc is None:
+				if client is None:
 					client.send_message(message.chat.id,f"**String Session is not Set**", reply_to_message_id=message.id)
 					return
 				
@@ -100,7 +100,7 @@ def save(client: Client, message: Message):
 			elif "https://t.me/b/" in message.text:
 				username = datas[4]
 				
-				if acc is None:
+				if client is None:
 					client.send_message(message.chat.id,f"**String Session is not Set**", reply_to_message_id=message.id)
 					return
 				try: handle_private(message,username,msgid)
@@ -120,7 +120,7 @@ def save(client: Client, message: Message):
 					else:
 						client.copy_media_group(message.chat.id, msg.chat.id, msg.id, reply_to_message_id=message.id)
 				except:
-					if acc is None:
+					if client is None:
 						client.send_message(message.chat.id,f"**String Session is not Set**", reply_to_message_id=message.id)
 						return
 					try: handle_private(message,username,msgid)
