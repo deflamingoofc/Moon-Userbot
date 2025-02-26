@@ -63,7 +63,7 @@ def save(client: Client, message: Message):
 			return
 
 		try:
-			try: acc.join_chat(message.text)
+			try: client.join_chat(message.text)
 			except Exception as e: 
 				client.send_message(message.chat.id,f"**Error** : __{e}__", reply_to_message_id=message.id)
 				return
