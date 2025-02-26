@@ -1,12 +1,10 @@
-import pyrogram
-from pyrogram import Client, filters
-from pyrogram.errors import UserAlreadyParticipant, InviteHashExpired, UsernameNotOccupied
-from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
-
 import time
 import os
 import threading
-import json
+
+from pyrogram import Client, filters
+from pyrogram.errors import UserAlreadyParticipant, InviteHashExpired, UsernameNotOccupied
+from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 
 from utils.misc import prefix
 
@@ -124,7 +122,7 @@ def save(client: Client, message: Message):
 						client.send_message(message.chat.id,f"**String Session is not Set**", reply_to_message_id=message.id)
 						return
 					try: handle_private(message,username,msgid)
-					except Exception as e: SendMessage.send_message(message.chat.id,f"**Error** : __{e}__", reply_to_message_id=message.id)
+					except Exception as e: client.send_message(message.chat.id,f"**Error** : __{e}__", reply_to_message_id=message.id)
 
 			# wait time
 			time.sleep(3)
