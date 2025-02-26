@@ -22,7 +22,7 @@ def downstatus(statusfile,message):
 		with open(statusfile,"r") as downread:
 			txt = downread.read()
 		try:
-			bot.edit_message_text(message.chat.id, message.id, f"__Downloaded__ : **{txt}**")
+			client.edit_message_text(message.chat.id, message.id, f"__Downloaded__ : **{txt}**")
 			time.sleep(10)
 		except:
 			time.sleep(5)
@@ -39,7 +39,7 @@ def upstatus(statusfile,message):
 		with open(statusfile,"r") as upread:
 			txt = upread.read()
 		try:
-			bot.edit_message_text(message.chat.id, message.id, f"__Uploaded__ : **{txt}**")
+			client.edit_message_text(message.chat.id, message.id, f"__Uploaded__ : **{txt}**")
 			time.sleep(10)
 		except:
 			time.sleep(5)
@@ -186,7 +186,7 @@ def handle_private(message: pyrogram.types.messages_and_media.message.Message, c
 
 		os.remove(file)
 		if os.path.exists(f'{message.id}upstatus.txt'): os.remove(f'{message.id}upstatus.txt')
-		bot.delete_messages(message.chat.id,[smsg.id])
+		client.delete_messages(message.chat.id,[smsg.id])
 
 
 # get the type of message
