@@ -6,7 +6,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 from pyrogram.errors import UserAlreadyParticipant, ChatForwardsRestricted
 
-from utils.misc import modules_help, prefix
+from utils.misc import prefix
 from utils.scripts import progress, format_exc
 
 
@@ -18,7 +18,7 @@ async def dl(client: Client, message: Message):
     # Check if the required arguments are provided
     if len(args) < 2:
         await message.edit_text(
-            "Kindly use `.rdl channel_link message_id [number_of_messages]`"
+            "Kindly use `.dl channel_link message_id [number_of_messages]`"
         )
         return
 
@@ -75,8 +75,3 @@ async def dl(client: Client, message: Message):
         await ms.delete()
     except Exception as e:
         await message.edit_text(format_exc(e))
-
-
-modules_help["rdl"] = {
-    "rdl channel_link message_id [number_of_messages]": "download restricted content. Note that number_of_messages is optional if you only want a single message to be downloaded, then don't provide it",
-}
