@@ -134,23 +134,6 @@ async def main():
             pass
         db.remove("core.updater", "restart_info")
 
-    # required for sessionkiller module
-    if db.get("core.sessionkiller", "enabled", False):
-        db.set(
-            "core.sessionkiller",
-            "auths_hashes",
-            [
-                auth.hash
-                for auth in (await app.invoke(GetAuthorizations())).authorizations
-            ],
-        )
-
-    logging.info("Moon-Userbot started!")
-
-    await idle()
-
-    await app.stop()
-
-
+    
 if __name__ == "__main__":
     app.run(main())
